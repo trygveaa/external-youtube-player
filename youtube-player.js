@@ -33,7 +33,22 @@ function stopVideo() {
     }
 }
 
+function showNotification() {
+    var notification = document.getElementById("external_player_notification");
+    if (!notification) {
+        var notificationSpan = document.createElement("span");
+        notificationSpan.innerHTML = "Opening in external player";
+        notification = document.createElement("div");
+        notification.setAttribute("id", "external_player_notification");
+        notification.appendChild(notificationSpan);
+        document.body.appendChild(notification);
+    }
+    notification.style.top = "10px";
+    setTimeout(function () { notification.style.top = "-40px"; }, 10000);
+}
+
 function playInExternalPlayer(link) {
+    showNotification();
     var newWindow = window.open(link, "_blank");
     setTimeout(function () { newWindow.close(); }, 200);
 }
@@ -51,6 +66,7 @@ function insertPlayerLink() {
         var playerLink = document.createElement("a");
         playerLink.setAttribute("href", link);
         playerLink.setAttribute("style", "text-decoration: none;");
+        playerLink.addEventListener("click", showNotification);
         playerLink.appendChild(playerButton);
 
         headline.appendChild(playerLink);
