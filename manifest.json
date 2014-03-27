@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+
+  "name": "External youtube player",
+  "version": "1.0",
+
+  "content_scripts": [
+    {
+      "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"],
+      "js": ["youtube-player.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
