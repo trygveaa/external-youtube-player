@@ -1,6 +1,7 @@
 var player;
 var video;
 var firstPause = true;
+var isDoubleClicked = false;
 
 function adShowing() {
     if (player) {
@@ -32,6 +33,11 @@ function stopVideo() {
     }
 }
 
+function playInExternalPlayer(link) {
+    var newWindow = window.open(link, "_blank");
+    setTimeout(function () { newWindow.close(); }, 200);
+}
+
 function insertPlayerLink() {
     var headline = document.getElementById("watch7-headline");
     if (headline) {
@@ -48,6 +54,10 @@ function insertPlayerLink() {
         playerLink.appendChild(playerButton);
 
         headline.appendChild(playerLink);
+
+        if (isDoubleClicked) {
+            playInExternalPlayer(link);
+        }
     }
 }
 
@@ -66,3 +76,5 @@ function handleInsertEvent(e) {
 
 document.addEventListener("DOMContentLoaded", documentLoaded, true);
 document.addEventListener("DOMNodeInserted", handleInsertEvent, true);
+document.addEventListener("click", function () { isDoubleClicked = false; }, true);
+document.addEventListener("dblclick", function () { isDoubleClicked = true; }, true);
