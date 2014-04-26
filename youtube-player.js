@@ -90,7 +90,30 @@ function handleInsertEvent(e) {
     }
 }
 
+function handleKeypress(e) {
+    if (e.keyCode === 32) {
+        if (video && document.activeElement.nodeName !== "INPUT") {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+            e.preventDefault();
+        }
+    } else if (e.keyCode === 13) {
+        var hover = document.querySelectorAll(":hover");
+        for (var i = hover.length; i-- > 0;) {
+            if (hover[i].href) {
+                var link = hover[i].href.replace(/https?/, "youtube");
+                playInExternalPlayer(link);
+                break;
+            }
+        }
+    }
+}
+
 document.addEventListener("DOMContentLoaded", documentLoaded, true);
 document.addEventListener("DOMNodeInserted", handleInsertEvent, true);
 document.addEventListener("click", function () { isDoubleClicked = false; }, true);
 document.addEventListener("dblclick", function () { isDoubleClicked = true; }, true);
+document.addEventListener("keypress", handleKeypress, true);
